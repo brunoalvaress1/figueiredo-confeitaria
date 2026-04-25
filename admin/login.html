@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Painel Admin | Figueiredo Confeitaria</title>
+  
+  <link rel="icon" type="image/png" href="../imagens/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-logo">
+        <img src="../imagens/logo.png" alt="Figueiredo Confeitaria" onerror="this.style.display='none'">
+        <h2>Figueiredo Confeitaria</h2>
+        <p>Painel Administrativo</p>
+      </div>
+      
+      <!-- Alertas -->
+      <div class="alerta-erro" id="alertaErro"></div>
+      <div class="alerta-sucesso" id="alertaSucesso"></div>
+      
+      <!-- Formulário -->
+      <form class="login-form" id="formLogin" onsubmit="fazerLogin(event)">
+        <div>
+          <label for="email">E-mail</label>
+          <div class="input-wrapper">
+            <i class="bi bi-envelope"></i>
+            <input 
+              type="email" 
+              id="email" 
+              placeholder="seuemail@gmail.com" 
+              required
+              autocomplete="email"
+            >
+          </div>
+        </div>
+        
+        <div>
+          <label for="senha">Senha</label>
+          <div class="input-wrapper">
+            <i class="bi bi-lock"></i>
+            <input 
+              type="password" 
+              id="senha" 
+              placeholder="Sua senha" 
+              required
+              autocomplete="current-password"
+            >
+          </div>
+        </div>
+        
+        <button type="submit" class="btn-login" id="btnEntrar">
+          <i class="bi bi-box-arrow-in-right"></i> ENTRAR
+        </button>
+      </form>
+      
+      <div class="login-footer">
+        <p style="margin: 1rem 0 0.3rem;">
+          <a href="#" onclick="esqueciSenha(event)">Esqueci minha senha</a>
+        </p>
+        <p style="margin: 0;">
+          <a href="../index.html"><i class="bi bi-arrow-left"></i> Voltar ao site</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/admin/admin-config.js"></script>
+  <script src="../js/admin/admin-login.js"></script>
+</body>
+</html>

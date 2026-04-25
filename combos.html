@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Combos Especiais - Figueiredo Confeitaria</title>
+  
+  <link rel="icon" type="image/png" href="imagens/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="imagens/logo.png" alt="Figueiredo Confeitaria">
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
+        <i class="bi bi-list fs-2 texto-rosa"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+          <li class="nav-item"><a class="nav-link" href="bolos.html">Bolos de Pote</a></li>
+          <li class="nav-item"><a class="nav-link" href="acais.html">Açaís</a></li>
+          <li class="nav-item"><a class="nav-link active" href="combos.html">Combos</a></li>
+          <li class="nav-item"><a class="nav-link" href="quem-somos.html">Quem Somos</a></li>
+          <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
+        </ul>
+        <a href="#" id="linkInstagram" class="btn-instagram" target="_blank">
+          <i class="bi bi-instagram"></i>
+          <span id="textoInstagram">@figueiredo___cofeitaria</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="container breadcrumb-custom">
+    <a href="index.html">Início</a>
+    <span class="separador">›</span>
+    <span class="atual">Combos Especiais</span>
+  </div>
+
+  <!-- PAGE HEADER -->
+  <section class="container page-header">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <p class="mb-0" style="color: var(--texto-medio); font-size: 1.1rem;">Nossos</p>
+        <h1>Combos Especiais <i class="bi bi-heart-fill coracao-inline"></i></h1>
+        <p class="subtitulo">
+          Mais sabor, mais economia! Combos criados para você aproveitar ainda mais.
+        </p>
+      </div>
+      <div class="col-lg-6 text-center mt-4 mt-lg-0">
+        <img src="imagens/combo-destaque.png" alt="Combos" class="img-fluid" style="max-height: 350px;">
+      </div>
+    </div>
+  </section>
+
+  <!-- LISTA DE COMBOS -->
+  <section class="container">
+    <div class="titulo-secao">
+      <div class="coracao-top"><i class="bi bi-heart-fill"></i></div>
+      <h2>Combos disponíveis</h2>
+    </div>
+    
+    <div class="row" id="listaCombos">
+      <div class="col-12 text-center py-4">
+        <div class="spinner-border texto-rosa" role="status"></div>
+      </div>
+    </div>
+    
+    <!-- BANNER ENTREGA -->
+    <div class="banner-entrega">
+      <div class="banner-entrega-info">
+        <div class="banner-entrega-icone">
+          <i class="bi bi-truck"></i>
+        </div>
+        <div>
+          <h4>Entregamos para você!</h4>
+          <p>Levamos até onde você estiver: escola, trabalho ou em casa.</p>
+        </div>
+      </div>
+      <a href="contato.html" class="btn-rosa">VER COMO FUNCIONA</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <img src="imagens/logo-branca.png" alt="Figueiredo Confeitaria">
+          <p>Mais que doces, entregamos momentos felizes! <i class="bi bi-heart-fill" style="color: var(--rosa-medio);"></i></p>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Contato</h5>
+          <ul>
+            <li><i class="bi bi-whatsapp"></i><span id="footerWhatsapp">(19) 99301-4791</span></li>
+            <li><i class="bi bi-instagram"></i><span id="footerInstagram">@figueiredo___cofeitaria</span></li>
+            <li><i class="bi bi-geo-alt"></i><span id="footerEndereco">Leme - SP</span></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-4">
+  <h5>Informações</h5>
+  <ul>
+    <li><a href="quem-somos.html">Quem Somos</a></li>
+    <li><a href="contato.html">Contato</a></li>
+    <li><a href="#">Política de Privacidade</a></li>
+    <li style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1);">
+  <a href="admin/login.html" class="acesso-admin-footer">
+    <i class="bi bi-lock-fill"></i> Acesso da loja
+  </a>
+</li>
+  </ul>
+</div>
+      </div>
+      <div class="footer-bottom">© 2024 Figueiredo Confeitaria - Todos os direitos reservados.</div>
+    </div>
+  </footer>
+
+  <!-- BOTTOM NAV MOBILE -->
+  <nav class="bottom-nav">
+    <a href="index.html" class="bottom-nav-item">
+      <i class="bi bi-house"></i><span>Início</span>
+    </a>
+    <a href="acais.html" class="bottom-nav-item">
+      <i class="bi bi-cup-straw"></i><span>Açaís</span>
+    </a>
+    <a href="combos.html" class="bottom-nav-item ativo">
+      <i class="bi bi-gift"></i><span>Combos</span>
+    </a>
+    <a href="carrinho.html" class="bottom-nav-item">
+      <i class="bi bi-bag"></i><span>Carrinho</span>
+      <span class="mini-badge" id="bottomBadge">0</span>
+    </a>
+  </nav>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/carrinho.js"></script>
+  <script src="js/carrinho-flutuante.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+      const container = document.getElementById('listaCombos');
+      const combos = await buscarCombos();
+      
+      if (combos.length === 0) {
+        container.innerHTML = '<div class="col-12 text-center py-4 text-muted">Nenhum combo disponível no momento.</div>';
+        return;
+      }
+      
+      let html = '';
+      combos.forEach(combo => {
+        const imagem = combo.imagem_url || 'https://via.placeholder.com/300';
+        
+        // Calcular desconto se tiver preço original
+        let descontoHtml = '';
+        if (combo.preco_original && combo.preco_original > combo.preco) {
+          const desconto = Math.round(((combo.preco_original - combo.preco) / combo.preco_original) * 100);
+          descontoHtml = `
+            <div class="badge-combo">
+              ${desconto}% OFF
+            </div>
+          `;
+        }
+        
+        let precoOriginalHtml = '';
+        if (combo.preco_original && combo.preco_original > combo.preco) {
+          precoOriginalHtml = `<small class="preco-riscado">${formatarPreco(combo.preco_original)}</small>`;
+        }
+        
+        html += `
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card-combo">
+              ${descontoHtml}
+              <img src="${imagem}" alt="${combo.nome}">
+              <div class="card-combo-corpo">
+                <h4 class="card-combo-nome">${combo.nome}</h4>
+                <p class="card-combo-desc">${combo.descricao || ''}</p>
+                <div class="card-combo-precos">
+                  ${precoOriginalHtml}
+                  <span class="preco-destaque">${formatarPreco(combo.preco)}</span>
+                </div>
+                <button class="btn-adicionar" onclick="adicionarAoCarrinho('${combo.id}', '${combo.nome}', ${combo.preco}, '${imagem}', 'combo')">
+                  ADICIONAR <i class="bi bi-bag"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    });
+  </script>
+</body>
+</html>

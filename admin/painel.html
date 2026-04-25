@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Painel Admin - Figueiredo Confeitaria</title>
+  
+  <link rel="icon" type="image/png" href="../imagens/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+
+  <div class="admin-layout">
+    <!-- Sidebar será injetada aqui -->
+    <div id="sidebarContainer"></div>
+    
+    <main class="admin-content">
+      <!-- Topbar será injetada aqui -->
+      <div id="topbarContainer"></div>
+      
+      <!-- Saudação -->
+      <div class="admin-card" style="background: linear-gradient(135deg, var(--rosa-claro) 0%, var(--rosa-medio) 100%); border: none;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div style="font-size: 2.5rem;">👋</div>
+          <div>
+            <h3 style="margin: 0; font-family: 'Playfair Display'; font-size: 1.5rem;">Olá, bem-vinda!</h3>
+            <p style="margin: 0.3rem 0 0; color: var(--texto-medio); font-size: 0.95rem;">
+              <span id="dataAtual"></span>
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- ESTATÍSTICAS -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-icone rosa">
+            <i class="bi bi-cake2"></i>
+          </div>
+          <div class="stat-card-info">
+            <h3 id="statBolos">0</h3>
+            <p>Bolos ativos</p>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-card-icone azul">
+            <i class="bi bi-flower1"></i>
+          </div>
+          <div class="stat-card-info">
+            <h3 id="statIngredientes">0</h3>
+            <p>Ingredientes disponíveis</p>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-card-icone verde">
+            <i class="bi bi-bag-check-fill"></i>
+          </div>
+          <div class="stat-card-info">
+            <h3 id="statPedidosHoje">0</h3>
+            <p>Pedidos hoje</p>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-card-icone amarelo">
+            <i class="bi bi-gift-fill"></i>
+          </div>
+          <div class="stat-card-info">
+            <h3 id="statCombos">0</h3>
+            <p>Combos ativos</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- AÇÕES RÁPIDAS -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h3><i class="bi bi-lightning-fill texto-rosa"></i> Ações rápidas</h3>
+        </div>
+        
+                <div class="acoes-rapidas">
+          <a href="bolos.html" class="acao-card">
+            <i class="bi bi-plus-circle-fill"></i>
+            <h5>Adicionar Bolo</h5>
+          </a>
+          <a href="ingredientes.html" class="acao-card">
+            <i class="bi bi-flower1"></i>
+            <h5>Gerenciar Ingredientes</h5>
+          </a>
+          <a href="combos.html" class="acao-card">
+            <i class="bi bi-gift-fill"></i>
+            <h5>Criar Combo</h5>
+          </a>
+          <a href="pedidos.html" class="acao-card">
+            <i class="bi bi-bag-fill"></i>
+            <h5>Ver Pedidos</h5>
+          </a>
+          <a href="configuracoes.html" class="acao-card">
+            <i class="bi bi-gear-fill"></i>
+            <h5>Configurações</h5>
+          </a>
+          <a href="../index.html" target="_blank" class="acao-card">
+            <i class="bi bi-box-arrow-up-right"></i>
+            <h5>Ver Site</h5>
+          </a>
+        </div>
+      </div>
+      
+      <!-- ÚLTIMOS PEDIDOS -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h3><i class="bi bi-clock-history texto-rosa"></i> Últimos pedidos</h3>
+          <a href="pedidos.html" class="btn-admin secundario pequeno">
+            Ver todos <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+        
+        <div id="listaUltimosPedidos">
+          <div class="loading-admin">
+            <div class="spinner-border spinner-border-sm"></div>
+            <p>Carregando pedidos...</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- AVISOS IMPORTANTES -->
+      <div class="admin-card" id="cardAvisos" style="display: none;">
+        <div class="admin-card-header">
+          <h3><i class="bi bi-exclamation-triangle-fill" style="color: #F9A825;"></i> Atenção</h3>
+        </div>
+        <div id="listaAvisos"></div>
+      </div>
+      
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/admin/admin-config.js"></script>
+  <script src="../js/admin/admin-painel.js"></script>
+</body>
+</html>
