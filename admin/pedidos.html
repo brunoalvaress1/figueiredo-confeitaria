@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pedidos | Painel Admin</title>
+  
+  <link rel="icon" type="image/png" href="../imagens/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/admin.css">
+  <style>
+    /* Estilos específicos de pedidos */
+    .card-estatistica {
+      background: var(--branco);
+      border-radius: var(--radius-md);
+      padding: 1.2rem;
+      box-shadow: var(--sombra-suave);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border-left: 4px solid var(--rosa-principal);
+    }
+    .card-estatistica.azul { border-left-color: #1976D2; }
+    .card-estatistica.verde { border-left-color: #2D9F4F; }
+    .card-estatistica.amarelo { border-left-color: #F9A825; }
+    .card-estatistica.cinza { border-left-color: #6C757D; }
+    
+    .card-estatistica .valor {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--texto-escuro);
+      line-height: 1.2;
+    }
+    .card-estatistica .label {
+      font-size: 0.8rem;
+      color: var(--texto-medio);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 500;
+    }
+    
+    .pedido-card {
+      background: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: var(--radius-md);
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+    }
+    .pedido-card:hover {
+      box-shadow: var(--sombra-media);
+      border-color: var(--rosa-medio);
+    }
+    .pedido-card.novo {
+      border-left: 4px solid #F9A825;
+      background: linear-gradient(to right, #FFF8E1 0%, var(--branco) 15%);
+    }
+    .pedido-card.em-preparo {
+      border-left: 4px solid #1976D2;
+    }
+    .pedido-card.entregue {
+      border-left: 4px solid #2D9F4F;
+      opacity: 0.85;
+    }
+    .pedido-card.cancelado {
+      border-left: 4px solid #DC3545;
+      opacity: 0.7;
+    }
+    
+    .pedido-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px dashed var(--borda);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .pedido-numero {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--rosa-principal);
+      margin: 0;
+    }
+    
+    .pedido-data {
+      font-size: 0.8rem;
+      color: var(--texto-claro);
+      margin-top: 0.2rem;
+    }
+    
+    .pedido-total {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--rosa-principal);
+    }
+    
+    .pedido-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.8rem;
+      font-size: 0.85rem;
+    }
+    
+    .pedido-info-item {
+      padding: 0.5rem 0;
+    }
+    
+    .pedido-info-item .label {
+      color: var(--texto-claro);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.2rem;
+    }
+    
+    .pedido-info-item .valor {
+      color: var(--texto-escuro);
+      font-weight: 500;
+    }
+    
+    .pedido-acoes {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--borda);
+      flex-wrap: wrap;
+    }
+    
+    .select-status {
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--borda);
+      font-size: 0.85rem;
+      font-weight: 500;
+      background: var(--branco);
+      cursor: pointer;
+    }
+    
+    .select-status.novo { color: #F9A825; border-color: #F9A825; }
+    .select-status.em_preparo { color: #1976D2; border-color: #1976D2; }
+    .select-status.entregue { color: #2D9F4F; border-color: #2D9F4F; }
+    .select-status.cancelado { color: #DC3545; border-color: #DC3545; }
+    
+    /* Modal de detalhes */
+    .detalhe-item-pedido {
+      background: var(--cinza-fundo);
+      padding: 0.8rem 1rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.6rem;
+    }
+    
+    .detalhe-item-pedido .nome {
+      font-weight: 600;
+      color: var(--texto-escuro);
+      margin-bottom: 0.2rem;
+    }
+    
+    .detalhe-item-pedido .ingredientes {
+      font-size: 0.8rem;
+      color: var(--texto-medio);
+      font-style: italic;
+    }
+    
+    .detalhe-item-pedido .preco {
+      color: var(--rosa-principal);
+      font-weight: 600;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-layout">
+    <div id="sidebarContainer"></div>
+    
+    <main class="admin-content">
+      <div id="topbarContainer"></div>
+      
+      <!-- ESTATÍSTICAS -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+        <div class="card-estatistica amarelo">
+          <div style="font-size: 1.8rem;">🔔</div>
+          <div>
+            <div class="valor" id="statNovos">0</div>
+            <div class="label">Novos pedidos</div>
+          </div>
+        </div>
+        <div class="card-estatistica azul">
+          <div style="font-size: 1.8rem;">👨‍🍳</div>
+          <div>
+            <div class="valor" id="statPreparo">0</div>
+            <div class="label">Em preparo</div>
+          </div>
+        </div>
+        <div class="card-estatistica verde">
+          <div style="font-size: 1.8rem;">✅</div>
+          <div>
+            <div class="valor" id="statEntregues">0</div>
+            <div class="label">Entregues hoje</div>
+          </div>
+        </div>
+        <div class="card-estatistica">
+          <div style="font-size: 1.8rem;">💰</div>
+          <div>
+            <div class="valor" id="statFaturamento">R$ 0,00</div>
+            <div class="label">Faturamento hoje</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- CARD PRINCIPAL -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h3><i class="bi bi-bag-fill texto-rosa"></i> Pedidos Recebidos</h3>
+          <button class="btn-admin secundario" onclick="carregarPedidos()">
+            <i class="bi bi-arrow-clockwise"></i> Atualizar
+          </button>
+        </div>
+        
+        <!-- FILTROS -->
+        <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 200px;">
+            <input 
+              type="text" 
+              id="filtroBusca" 
+              placeholder="🔍 Buscar por nome, telefone..." 
+              style="width: 100%; padding: 0.7rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--borda);"
+              oninput="filtrarPedidos()"
+            >
+          </div>
+          <select id="filtroStatus" style="padding: 0.7rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--borda); min-width: 180px;" onchange="filtrarPedidos()">
+            <option value="todos">Todos os status</option>
+            <option value="novo">Novos</option>
+            <option value="em_preparo">Em preparo</option>
+            <option value="entregue">Entregues</option>
+            <option value="cancelado">Cancelados</option>
+          </select>
+          <select id="filtroPeriodo" style="padding: 0.7rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--borda); min-width: 180px;" onchange="filtrarPedidos()">
+            <option value="hoje">Hoje</option>
+            <option value="7dias">Últimos 7 dias</option>
+            <option value="30dias">Últimos 30 dias</option>
+            <option value="todos">Todos</option>
+          </select>
+        </div>
+        
+        <!-- LISTA DE PEDIDOS -->
+        <div id="containerPedidos">
+          <div class="loading-admin">
+            <div class="spinner-border"></div>
+            <p>Carregando pedidos...</p>
+          </div>
+        </div>
+      </div>
+      
+    </main>
+  </div>
+
+  <!-- MODAL DETALHES DO PEDIDO -->
+  <div class="modal-admin" id="modalDetalhes">
+    <div class="modal-admin-caixa" style="max-width: 700px;">
+      <div class="modal-admin-header">
+        <h3 id="tituloDetalhes"><i class="bi bi-bag"></i> Detalhes do Pedido</h3>
+        <button class="modal-admin-close" onclick="fecharModalDetalhes()">&times;</button>
+      </div>
+      
+      <div class="modal-admin-body" id="conteudoDetalhes">
+        <!-- Preenchido via JS -->
+      </div>
+      
+      <div class="modal-admin-footer">
+        <button class="btn-admin secundario" onclick="fecharModalDetalhes()">Fechar</button>
+        <button class="btn-admin" id="btnWhatsAppCliente" style="background: #25D366;">
+          <i class="bi bi-whatsapp"></i> Falar com cliente
+        </button>
+      </div>
+    </div>
+  </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/admin/admin-config.js"></script>
+  <script src="../js/admin/admin-pedidos.js"></script>
+</body>
+</html>

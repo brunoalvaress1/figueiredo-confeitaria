@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Combos | Painel Admin</title>
+  
+  <link rel="icon" type="image/png" href="../imagens/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+
+  <div class="admin-layout">
+    <div id="sidebarContainer"></div>
+    
+    <main class="admin-content">
+      <div id="topbarContainer"></div>
+      
+      <!-- CARD PRINCIPAL -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h3><i class="bi bi-gift-fill texto-rosa"></i> Combos Especiais</h3>
+          <button class="btn-admin" onclick="abrirModalCombo()">
+            <i class="bi bi-plus-lg"></i> Novo Combo
+          </button>
+        </div>
+        
+        <div style="background: var(--rosa-claro); padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--texto-medio);">
+          <i class="bi bi-info-circle-fill texto-rosa"></i>
+          <strong>Dica:</strong> Combos são combinações especiais com desconto. 
+          Informe o <strong>preço original</strong> (soma dos produtos) e o <strong>preço promocional</strong> (com desconto). O site calcula o % de desconto automaticamente!
+        </div>
+        
+        <!-- FILTROS -->
+        <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 200px;">
+            <input 
+              type="text" 
+              id="filtroNome" 
+              placeholder="🔍 Buscar combo..." 
+              style="width: 100%; padding: 0.7rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--borda);"
+              oninput="filtrarCombos()"
+            >
+          </div>
+          <select id="filtroStatus" style="padding: 0.7rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--borda); min-width: 180px;" onchange="filtrarCombos()">
+            <option value="todos">Todos</option>
+            <option value="ativos">Apenas ativos</option>
+            <option value="inativos">Apenas inativos</option>
+          </select>
+        </div>
+        
+        <!-- LISTA/TABELA -->
+        <div id="containerCombos">
+          <div class="loading-admin">
+            <div class="spinner-border"></div>
+            <p>Carregando combos...</p>
+          </div>
+        </div>
+      </div>
+      
+    </main>
+  </div>
+
+  <!-- MODAL ADICIONAR/EDITAR -->
+  <div class="modal-admin" id="modalCombo">
+    <div class="modal-admin-caixa">
+      <div class="modal-admin-header">
+        <h3 id="tituloModalCombo"><i class="bi bi-plus-circle"></i> Novo Combo</h3>
+        <button class="modal-admin-close" onclick="fecharModalCombo()">&times;</button>
+      </div>
+      
+      <form id="formCombo" onsubmit="salvarCombo(event)">
+        <div class="modal-admin-body">
+          <input type="hidden" id="comboId">
+          
+          <!-- Upload de imagem -->
+          <div class="form-group">
+            <label>Imagem do combo</label>
+            <div class="upload-imagem">
+              <i class="bi bi-cloud-arrow-up"></i>
+              <p>Clique para enviar uma imagem</p>
+              <p style="font-size: 0.75rem; margin-top: 0.3rem;">PNG, JPG ou WEBP (máx 2MB)</p>
+              <input type="file" id="inputImagemCombo" accept="image/*" onchange="previewImagemCombo(event)">
+            </div>
+            <img id="previewImagemCombo" class="upload-preview" style="display: none;">
+          </div>
+          
+          <!-- Nome -->
+          <div class="form-group">
+            <label for="nomeCombo">Nome do combo *</label>
+            <input type="text" id="nomeCombo" required placeholder="Ex: Combo Casal">
+          </div>
+          
+          <!-- Descrição -->
+          <div class="form-group">
+            <label for="descricaoCombo">Descrição *</label>
+            <textarea id="descricaoCombo" rows="3" placeholder="Ex: 2 açaís 500ml + 2 bolos de pote"></textarea>
+            <small style="color: var(--texto-claro); font-size: 0.8rem;">Detalhe o que está incluso no combo</small>
+          </div>
+          
+          <!-- Preços -->
+          <div class="form-group-row">
+            <div class="form-group" style="margin: 0;">
+              <label for="precoOriginalCombo">Preço original (R$)</label>
+              <input type="number" id="precoOriginalCombo" step="0.01" min="0" placeholder="40.00" oninput="calcularDesconto()">
+              <small style="color: var(--texto-claro); font-size: 0.8rem;">Soma dos produtos sem desconto</small>
+            </div>
+            <div class="form-group" style="margin: 0;">
+              <label for="precoCombo">Preço promocional (R$) *</label>
+              <input type="number" id="precoCombo" step="0.01" min="0" required placeholder="32.00" oninput="calcularDesconto()">
+              <small style="color: var(--texto-claro); font-size: 0.8rem;">Preço com desconto que o cliente paga</small>
+            </div>
+          </div>
+          
+          <!-- Preview do desconto -->
+          <div id="previewDesconto" style="display: none; background: linear-gradient(135deg, var(--rosa-claro), var(--rosa-medio)); padding: 1rem; border-radius: var(--radius-sm); margin-top: 1rem; text-align: center;">
+            <div style="font-size: 0.8rem; color: var(--texto-medio); margin-bottom: 0.3rem;">Economia total</div>
+            <div id="textoDesconto" style="font-size: 1.3rem; color: var(--rosa-principal); font-weight: 700;"></div>
+            <div id="porcentagemDesconto" style="font-size: 0.9rem; color: var(--texto-medio); margin-top: 0.3rem;"></div>
+          </div>
+          
+          <!-- Ordem e Status -->
+          <div class="form-group-row" style="margin-top: 1rem;">
+            <div class="form-group" style="margin: 0;">
+              <label for="ordemCombo">Ordem de exibição</label>
+              <input type="number" id="ordemCombo" min="0" value="0">
+            </div>
+            <div class="form-group" style="margin: 0; display: flex; align-items: center; background: var(--cinza-fundo); padding: 0.7rem 1rem; border-radius: var(--radius-sm);">
+              <div class="form-check" style="margin: 0;">
+                <input type="checkbox" id="ativoCombo" checked>
+                <label for="ativoCombo" style="cursor: pointer;">
+                  <strong>Ativo</strong>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-admin-footer">
+          <button type="button" class="btn-admin secundario" onclick="fecharModalCombo()">Cancelar</button>
+          <button type="submit" class="btn-admin" id="btnSalvarCombo">
+            <i class="bi bi-check-lg"></i> Salvar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL CONFIRMAR EXCLUSÃO -->
+  <div class="modal-admin" id="modalExcluir">
+    <div class="modal-admin-caixa" style="max-width: 400px;">
+      <div class="modal-admin-body text-center">
+        <div style="width: 70px; height: 70px; background: #FEE; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: #DC3545; font-size: 2rem;">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+        </div>
+        <h3 style="font-family: 'Poppins'; font-size: 1.1rem; margin-bottom: 0.5rem;">Excluir combo?</h3>
+        <p style="color: var(--texto-medio); font-size: 0.9rem;">
+          O combo <strong id="nomeComboExcluir"></strong> será removido permanentemente.
+        </p>
+        <div style="display: flex; gap: 0.7rem; margin-top: 1.5rem;">
+          <button class="btn-admin secundario" onclick="fecharModalExcluir()" style="flex: 1;">Cancelar</button>
+          <button class="btn-admin perigo" id="btnConfirmarExcluir" style="flex: 1;">
+            <i class="bi bi-trash"></i> Excluir
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/admin/admin-config.js"></script>
+  <script src="../js/admin/admin-combos.js"></script>
+</body>
+</html>

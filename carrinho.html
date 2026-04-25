@@ -31,33 +31,32 @@
   </nav>
 
   <!-- ETAPA 1: CARRINHO -->
-<div class="checkout-container" id="etapa1">
-  <div class="checkout-header">
-    <div class="passo-numero">1</div>
-    <h3>Carrinho</h3>
-  </div>
-  <div class="checkout-body">
-    <div id="itensCheckout"></div>
-    <div id="checkoutVazio" class="text-center py-5 d-none">
-      <i class="bi bi-bag" style="font-size: 3rem; color: var(--borda);"></i>
-      <p class="mt-3 text-muted">Seu carrinho está vazio</p>
-      <a href="index.html" class="btn-rosa mt-2">VER CARDÁPIO</a>
+  <div class="checkout-container" id="etapa1">
+    <div class="checkout-header">
+      <div class="passo-numero">1</div>
+      <h3>Carrinho</h3>
     </div>
-    <div id="rodapeCarrinho">
-      <div class="resumo-total">
-        <span>Subtotal</span>
-        <span class="valor" id="subtotalEtapa1">R$ 0,00</span>
+    <div class="checkout-body">
+      <div id="itensCheckout"></div>
+      <div id="checkoutVazio" class="text-center py-5 d-none">
+        <i class="bi bi-bag" style="font-size: 3rem; color: var(--borda);"></i>
+        <p class="mt-3 text-muted">Seu carrinho está vazio</p>
+        <a href="index.html" class="btn-rosa mt-2">VER CARDÁPIO</a>
       </div>
-      
-      <!-- BOTÃO CONTINUAR COMPRANDO -->
-      <button class="btn-continuar-comprando" onclick="continuarComprando()">
-        <i class="bi bi-plus-circle"></i> CONTINUAR COMPRANDO
-      </button>
-      
-      <button class="btn-grande w-100" onclick="irParaEtapa(2)">FINALIZAR PEDIDO</button>
+      <div id="rodapeCarrinho">
+        <div class="resumo-total">
+          <span>Subtotal</span>
+          <span class="valor" id="subtotalEtapa1">R$ 0,00</span>
+        </div>
+        
+        <button class="btn-continuar-comprando" onclick="continuarComprando()">
+          <i class="bi bi-plus-circle"></i> CONTINUAR COMPRANDO
+        </button>
+        
+        <button class="btn-grande w-100" onclick="irParaEtapa(2)">FINALIZAR PEDIDO</button>
+      </div>
     </div>
   </div>
-</div>
 
   <!-- ETAPA 2: ENDEREÇO -->
   <div class="checkout-container d-none" id="etapa2">
@@ -88,6 +87,14 @@
       </div>
       
       <div class="mt-3">
+        <label class="form-label">Nome do cliente</label>
+        <input type="text" class="form-control" id="nomeCliente" placeholder="Seu nome completo">
+      </div>
+      <div class="mt-3">
+        <label class="form-label">Telefone / WhatsApp</label>
+        <input type="tel" class="form-control" id="telefoneCliente" placeholder="(19) 99999-9999">
+      </div>
+      <div class="mt-3">
         <label class="form-label">Nome do local</label>
         <input type="text" class="form-control" id="nomeLocal" placeholder="Ex: Escola Estadual São José">
       </div>
@@ -108,10 +115,124 @@
     </div>
   </div>
 
-  <!-- ETAPA 3: RESUMO -->
+  <!-- ETAPA 3: PAGAMENTO (NOVA!) -->
   <div class="checkout-container d-none" id="etapa3">
     <div class="checkout-header">
       <button class="btn-voltar" style="padding: 0.3rem 0.6rem; border: none;" onclick="irParaEtapa(2)">
+        <i class="bi bi-arrow-left"></i>
+      </button>
+      <h3>Forma de pagamento</h3>
+    </div>
+    <div class="checkout-body">
+      <p class="text-muted mb-3" style="font-size: 0.9rem;">
+        <i class="bi bi-info-circle-fill" style="color: var(--rosa-principal);"></i>
+        Como você prefere pagar seu pedido?
+      </p>
+      
+      <!-- OPÇÕES DE PAGAMENTO -->
+      <div class="opcoes-pagamento">
+        
+        <!-- PIX -->
+        <label class="opcao-pagamento" onclick="selecionarPagamento('pix')">
+          <input type="radio" name="formaPagamento" value="pix" id="pag_pix">
+          <div class="opcao-pagamento-conteudo">
+            <div class="opcao-pagamento-icone" style="background: #E8F5ED; color: #32BCAD;">
+              <i class="bi bi-qr-code"></i>
+            </div>
+            <div class="opcao-pagamento-info">
+              <h4>PIX</h4>
+              <p>Pagamento instantâneo</p>
+            </div>
+            <div class="opcao-pagamento-check">
+              <i class="bi bi-check-circle-fill"></i>
+            </div>
+          </div>
+        </label>
+        
+        <!-- Dinheiro -->
+        <label class="opcao-pagamento" onclick="selecionarPagamento('dinheiro')">
+          <input type="radio" name="formaPagamento" value="dinheiro" id="pag_dinheiro">
+          <div class="opcao-pagamento-conteudo">
+            <div class="opcao-pagamento-icone" style="background: #E8F5ED; color: #2D9F4F;">
+              <i class="bi bi-cash-stack"></i>
+            </div>
+            <div class="opcao-pagamento-info">
+              <h4>Dinheiro</h4>
+              <p>Pagamento em espécie na entrega</p>
+            </div>
+            <div class="opcao-pagamento-check">
+              <i class="bi bi-check-circle-fill"></i>
+            </div>
+          </div>
+        </label>
+        
+        <!-- Campo de troco (aparece se dinheiro selecionado) -->
+        <div id="campoTroco" style="display: none; padding: 1rem; background: #FFF8E1; border-radius: var(--radius-sm); border-left: 3px solid #F9A825; margin-left: 1rem;">
+          <label for="valorTroco" style="font-size: 0.9rem; font-weight: 500; margin-bottom: 0.5rem; display: block;">
+            <i class="bi bi-info-circle-fill" style="color: #F9A825;"></i>
+            Precisa de troco?
+          </label>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <span style="color: var(--texto-medio); font-weight: 500;">R$</span>
+            <input 
+              type="number" 
+              id="valorTroco" 
+              step="0.01" 
+              min="0" 
+              placeholder="0,00"
+              class="form-control"
+              style="flex: 1;"
+            >
+          </div>
+          <small class="text-muted" style="font-size: 0.75rem; display: block; margin-top: 0.4rem;">
+            Informe o valor que vai usar (deixe vazio se não precisa de troco)
+          </small>
+        </div>
+        
+        <!-- Cartão de Crédito -->
+        <label class="opcao-pagamento" onclick="selecionarPagamento('cartao_credito')">
+          <input type="radio" name="formaPagamento" value="cartao_credito" id="pag_cartao_credito">
+          <div class="opcao-pagamento-conteudo">
+            <div class="opcao-pagamento-icone" style="background: #E3F2FD; color: #1976D2;">
+              <i class="bi bi-credit-card"></i>
+            </div>
+            <div class="opcao-pagamento-info">
+              <h4>Cartão de Crédito</h4>
+              <p>Na maquininha (entrega)</p>
+            </div>
+            <div class="opcao-pagamento-check">
+              <i class="bi bi-check-circle-fill"></i>
+            </div>
+          </div>
+        </label>
+        
+               <!-- Cartão de Débito -->
+        <label class="opcao-pagamento" onclick="selecionarPagamento('cartao_debito')">
+          <input type="radio" name="formaPagamento" value="cartao_debito" id="pag_cartao_debito">
+          <div class="opcao-pagamento-conteudo">
+            <div class="opcao-pagamento-icone" style="background: #F3E5F5; color: #8E24AA;">
+              <i class="bi bi-credit-card-2-front"></i>
+            </div>
+            <div class="opcao-pagamento-info">
+              <h4>Cartão de Débito</h4>
+              <p>Na maquininha (entrega)</p>
+            </div>
+            <div class="opcao-pagamento-check">
+              <i class="bi bi-check-circle-fill"></i>
+            </div>
+          </div>
+        </label>
+        
+      </div>
+      
+      <button class="btn-grande w-100 mt-4" onclick="validarPagamento()">CONTINUAR</button>
+    </div>
+  </div>
+
+  <!-- ETAPA 4: RESUMO -->
+  <div class="checkout-container d-none" id="etapa4">
+    <div class="checkout-header">
+      <button class="btn-voltar" style="padding: 0.3rem 0.6rem; border: none;" onclick="irParaEtapa(3)">
         <i class="bi bi-arrow-left"></i>
       </button>
       <h3>Resumo do pedido</h3>
@@ -122,21 +243,22 @@
       <div class="mt-3">
         <div class="resumo-linha">
           <span>Subtotal</span>
-          <span id="subtotalEtapa3">R$ 0,00</span>
+          <span id="subtotalEtapa4">R$ 0,00</span>
         </div>
         <div class="resumo-linha">
           <span>Taxa de entrega</span>
-          <span id="taxaEntregaEtapa3">R$ 5,00</span>
+          <span id="taxaEntregaEtapa4">R$ 5,00</span>
         </div>
         <div class="resumo-total">
           <span>Total</span>
-          <span class="valor" id="totalEtapa3">R$ 0,00</span>
+          <span class="valor" id="totalEtapa4">R$ 0,00</span>
         </div>
       </div>
       
+      <!-- Endereço -->
       <div class="mt-4 p-3" style="background: var(--rosa-claro); border-radius: var(--radius-sm);">
         <div class="d-flex justify-content-between align-items-start">
-          <strong>Endereço de entrega</strong>
+          <strong><i class="bi bi-geo-alt-fill"></i> Endereço de entrega</strong>
           <button class="btn btn-sm btn-link p-0 text-decoration-none" onclick="irParaEtapa(2)" style="color: var(--rosa-principal);">
             <i class="bi bi-pencil"></i> Editar
           </button>
@@ -144,16 +266,27 @@
         <div id="enderecoResumo" class="mt-2" style="font-size: 0.9rem;"></div>
       </div>
       
-      <button class="btn-grande w-100 mt-4" onclick="irParaEtapa(4)">
+      <!-- Forma de Pagamento -->
+      <div class="mt-3 p-3" style="background: #E8F5ED; border-radius: var(--radius-sm);">
+        <div class="d-flex justify-content-between align-items-start">
+          <strong><i class="bi bi-credit-card-fill"></i> Forma de pagamento</strong>
+          <button class="btn btn-sm btn-link p-0 text-decoration-none" onclick="irParaEtapa(3)" style="color: var(--rosa-principal);">
+            <i class="bi bi-pencil"></i> Editar
+          </button>
+        </div>
+        <div id="pagamentoResumo" class="mt-2" style="font-size: 0.9rem;"></div>
+      </div>
+      
+      <button class="btn-grande w-100 mt-4" onclick="irParaEtapa(5)">
         <i class="bi bi-whatsapp"></i> ENVIAR PEDIDO VIA WHATSAPP
       </button>
     </div>
   </div>
 
-  <!-- ETAPA 4: WHATSAPP -->
-  <div class="checkout-container d-none" id="etapa4">
+  <!-- ETAPA 5: WHATSAPP -->
+  <div class="checkout-container d-none" id="etapa5">
     <div class="checkout-header">
-      <button class="btn-voltar" style="padding: 0.3rem 0.6rem; border: none;" onclick="irParaEtapa(3)">
+      <button class="btn-voltar" style="padding: 0.3rem 0.6rem; border: none;" onclick="irParaEtapa(4)">
         <i class="bi bi-arrow-left"></i>
       </button>
       <h3>Enviar pedido</h3>
@@ -164,7 +297,7 @@
       </div>
       <p class="text-muted">Seu pedido será enviado para o WhatsApp e finalizado com a nossa equipe.</p>
       
-      <div style="background: #DCF8C6; border-radius: var(--radius-md); padding: 1rem; text-align: left; font-size: 0.85rem; margin: 1.5rem 0;" id="previaMensagem">
+      <div style="background: #DCF8C6; border-radius: var(--radius-md); padding: 1rem; text-align: left; font-size: 0.85rem; margin: 1.5rem 0; max-height: 300px; overflow-y: auto;" id="previaMensagem">
         <!-- Preview da mensagem -->
       </div>
       

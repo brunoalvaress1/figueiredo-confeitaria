@@ -2001,3 +2001,105 @@ img {
 .acesso-admin-footer i {
   font-size: 0.75rem;
 }
+
+
+/* ============================================
+   OPÇÕES DE PAGAMENTO
+   ============================================ */
+.opcoes-pagamento {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.opcao-pagamento {
+  cursor: pointer;
+  display: block;
+  margin: 0;
+}
+
+.opcao-pagamento input[type="radio"] {
+  display: none;
+}
+
+.opcao-pagamento-conteudo {
+  background: var(--branco);
+  border: 2px solid var(--borda);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.opcao-pagamento:hover .opcao-pagamento-conteudo {
+  border-color: var(--rosa-medio);
+  background: var(--rosa-suave);
+}
+
+.opcao-pagamento input[type="radio"]:checked + .opcao-pagamento-conteudo {
+  border-color: var(--rosa-principal);
+  background: var(--rosa-claro);
+  box-shadow: 0 4px 12px rgba(196, 48, 90, 0.15);
+}
+
+.opcao-pagamento-icone {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.opcao-pagamento-info {
+  flex: 1;
+}
+
+.opcao-pagamento-info h4 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--texto-escuro);
+  margin: 0 0 0.2rem;
+}
+
+.opcao-pagamento-info p {
+  font-size: 0.8rem;
+  color: var(--texto-medio);
+  margin: 0;
+}
+
+.opcao-pagamento-check {
+  width: 28px;
+  height: 28px;
+  color: var(--rosa-principal);
+  font-size: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.opcao-pagamento input[type="radio"]:checked + .opcao-pagamento-conteudo .opcao-pagamento-check {
+  opacity: 1;
+}
+
+@media (max-width: 576px) {
+  .opcao-pagamento-conteudo {
+    padding: 0.8rem;
+  }
+  .opcao-pagamento-info h4 {
+    font-size: 0.9rem;
+  }
+  .opcao-pagamento-info p {
+    font-size: 0.75rem;
+  }
+  .opcao-pagamento-icone {
+    width: 42px;
+    height: 42px;
+    font-size: 1.2rem;
+  }
+}

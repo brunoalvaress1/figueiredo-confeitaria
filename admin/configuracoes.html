@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurações | Painel Admin</title>
+  
+  <link rel="icon" type="image/png" href="../imagens/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/admin.css">
+  <style>
+    .config-section {
+      background: var(--branco);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--sombra-suave);
+    }
+    
+    .config-section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--borda);
+    }
+    
+    .config-section-icone {
+      width: 45px;
+      height: 45px;
+      background: var(--rosa-claro);
+      color: var(--rosa-principal);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+    
+    .config-section-titulo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0;
+    }
+    
+    .config-section-descricao {
+      font-size: 0.85rem;
+      color: var(--texto-claro);
+      margin: 0.2rem 0 0;
+    }
+    
+    .tabs-config {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.3rem;
+    }
+    
+    .tab-config {
+      padding: 0.6rem 1.2rem;
+      border: 1px solid var(--borda);
+      border-radius: var(--radius-pill);
+      background: var(--branco);
+      color: var(--texto-medio);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    
+    .tab-config:hover {
+      border-color: var(--rosa-principal);
+      color: var(--rosa-principal);
+    }
+    
+    .tab-config.ativa {
+      background: var(--rosa-principal);
+      color: var(--branco);
+      border-color: var(--rosa-principal);
+    }
+    
+    .tab-conteudo {
+      display: none;
+    }
+    
+    .tab-conteudo.ativa {
+      display: block;
+    }
+    
+    .config-preview {
+      background: var(--cinza-fundo);
+      padding: 0.8rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      color: var(--texto-medio);
+      margin-top: 0.5rem;
+      font-family: 'Courier New', monospace;
+    }
+    
+    .card-dica {
+      background: linear-gradient(135deg, var(--rosa-claro), var(--rosa-suave));
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--texto-medio);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+    }
+    
+    .card-dica i {
+      color: var(--rosa-principal);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    
+    .botao-flutuante-salvar {
+      position: sticky;
+      bottom: 20px;
+      z-index: 100;
+      background: var(--branco);
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+      border: 2px solid var(--rosa-medio);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-layout">
+    <div id="sidebarContainer"></div>
+    
+    <main class="admin-content">
+      <div id="topbarContainer"></div>
+      
+      <!-- CARD TOPO -->
+      <div class="admin-card" style="background: linear-gradient(135deg, var(--rosa-claro), var(--rosa-medio)); border: none;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div style="font-size: 2.5rem;">⚙️</div>
+          <div>
+            <h3 style="margin: 0; font-family: 'Playfair Display'; font-size: 1.5rem;">Configurações da Loja</h3>
+            <p style="margin: 0.3rem 0 0; color: var(--texto-medio); font-size: 0.9rem;">
+              Personalize as informações exibidas em todo o site
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- TABS -->
+      <div class="tabs-config">
+        <button class="tab-config ativa" onclick="mudarTab('contato')">
+          <i class="bi bi-telephone"></i> Contato
+        </button>
+        <button class="tab-config" onclick="mudarTab('entrega')">
+          <i class="bi bi-truck"></i> Entrega
+        </button>
+        <button class="tab-config" onclick="mudarTab('acai')">
+          <i class="bi bi-cup-straw"></i> Açaí
+        </button>
+        <button class="tab-config" onclick="mudarTab('mensagens')">
+          <i class="bi bi-chat-dots"></i> Mensagens
+        </button>
+      </div>
+      
+      <!-- LOADING -->
+      <div id="loadingConfig" class="loading-admin">
+        <div class="spinner-border"></div>
+        <p>Carregando configurações...</p>
+      </div>
+      
+      <!-- CONTEÚDO -->
+      <div id="conteudoConfig" style="display: none;">
+        
+        <!-- ============================================ -->
+        <!-- TAB: CONTATO -->
+        <!-- ============================================ -->
+        <div class="tab-conteudo ativa" id="tab-contato">
+          
+          <div class="card-dica">
+            <i class="bi bi-info-circle-fill"></i>
+            <div>
+              <strong>Importante:</strong> Essas informações aparecem em todas as páginas do site (rodapé, página de contato, botões do WhatsApp, etc.).
+            </div>
+          </div>
+          
+          <!-- WhatsApp -->
+          <div class="config-section">
+            <div class="config-section-header">
+              <div class="config-section-icone" style="background: #DCF8C6; color: #25D366;">
+                <i class="bi bi-whatsapp"></i>
+              </div>
+              <div>
+                <h3 class="config-section-titulo">WhatsApp</h3>
+                <p class="config-section-descricao">Número usado para receber pedidos</p>
+              </div>
+            </div>
+            
+            <div class="form-group-row">
+              <div class="form-group" style="margin: 0;">
+                <label for="whatsapp">Número (com DDI e DDD) *</label>
+                <input type="text" id="whatsapp" placeholder="5519993014791">
+                <small style="color: var(--texto-claro); font-size: 0.8rem;">Apenas números. Começa com 55 (Brasil) + DDD + número</small>
+              </div>
+              <div class="form-group" style="margin: 0;">
+                <label for="whatsapp_formatado">Formato de exibição *</label>
+                <input type="text" id="whatsapp_formatado" placeholder="(19) 99301-4791">
+                <small style="color: var(--texto-claro); font-size: 0.8rem;">Como aparece para o cliente no site</small>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Instagram -->
+          <div class="config-section">
+            <div class="config-section-header">
+              <div class="config-section-icone" style="background: linear-gradient(135deg, #f09433, #dc2743); color: white;">
+                <i class="bi bi-instagram"></i>
+              </div>
+              <div>
+                <h3 class="config-section-titulo">Instagram</h3>
+                <p class="config-section-descricao">Perfil da confeitaria no Instagram</p>
+              </div>
+            </div>
+            
+            <div class="form-group-row">
+              <div class="form-group" style="margin: 0;">
+                <label for="instagram">Nome de usuário *</label>
+                <input type="text" id="instagram" placeholder="@figueiredo___cofeitaria">
+                <small style="color: var(--texto-claro); font-size: 0.8rem;">Como aparece no site (com @ ou sem)</small>
+              </div>
+              <div class="form-group" style="margin: 0;">
+                <label for="instagram_link">Link completo do perfil *</label>
+                <input type="url" id="instagram_link" placeholder="https://instagram.com/figueiredo___cofeitaria">
+                <small style="color: var(--texto-claro); font-size: 0.8rem;">URL completa para abrir o perfil</small>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Endereço -->
+          <div class="config-section">
+            <div class="config-section-header">
+              <div class="config-section-icone">
+                <i class="bi bi-geo-alt"></i>
+              </div>
+              <div>
+                <h3 class="config-section-titulo">Localização</h3>
+                <p class="config-section-descricao">Cidade/estado onde a loja atende</p>
+              </div>
+            </div>
+            
+            <div class="form-group" style="margin: 0;">
+              <label for="endereco">Cidade - Estado *</label>
+              <input type="text" id="endereco" placeholder="Leme - SP">
+            </div>
+          </div>
+          
+        </div>
+
+                <!-- ============================================ -->
+        <!-- TAB: ENTREGA -->
+        <!-- ============================================ -->
+        <div class="tab-conteudo" id="tab-entrega">
+          
+          <div class="card-dica">
+            <i class="bi bi-info-circle-fill"></i>
+            <div>
+              <strong>Dica:</strong> Defina a taxa de entrega e o tempo estimado para o cliente saber o que esperar.
+            </div>
+          </div>
+          
+          <!-- Taxa de entrega -->
+          <div class="config-section">
+            <div class="config-section-header">
+              <div class="config-section-icone">
+                <i class="bi bi-cash-coin"></i>
+              </div>
+              <div>
+                <h3 class="config-section-titulo">Taxa de entrega</h3>
+                <p class="config-section-descricao">Valor cobrado por entrega (deixe 0 para grátis)</p>
+              </div>
+            </div>
+            
+            <div class="form-group" style="margin: 0;">
+              <label for="taxa_entrega">Valor da taxa (R$)</label>
+              <input type="number" id="taxa_entrega" step="0.01" min="0" placeholder="5.00">
+              <small style="color: var(--texto-claro); font-size: 0.8rem;">
+                Deixe 0 (zero) se a entrega for gratuita
+              </small>
+            </div>
+          </div>
+          
+          <!-- Tempo de entrega -->
+          <div class="config-section">
+            <div class="config-section-header">
+              <div class="config-section-icone">
+                <i class="bi bi-clock"></i>
+              </div>
+              <div>
+                <h3 class="config-section-titulo">Tempo estimado de entrega</h3>
+                <p class="config-section-descricao">Quanto tempo leva pra entregar</p>
+              </div>
+            </div>
+            
+            <div class="form-group" style="margin: 0;">
+              <label for="tempo_entrega">Tempo (em minutos ou texto)</label>
+              <input type="text" id="tempo_entrega" placeholder="30 a 45 minutos">
+              <small style="color: var(--texto-claro); font-size: 0.8rem;">
+                Ex: "30 a 45 minutos", "até 1 hora", "combinar no WhatsApp"
+              </small>
+            </div>
+          </div>
+          
+          <!-- Valor mínimo -->
+          <div class="config-section">
+            <div class="config-section-header">
+              <div class="config-section-icone">
+                <i class="bi bi-basket"></i>
+              </div>
+              <div>
+                <h3 class="config-section-titulo">Valor mínimo do pedido</h3>
+                <p class="config-section-descricao">Pedido mínimo para fazer a entrega</p>
+              </div>
+            </div>
+            
+            <div class="form-group" style="margin: 0;">
+              <label for="valor_minimo">Valor mínimo (R$)</label>
+              <input type="number" id="valor_minimo" step="0.01" min="0" placeholder="15.00">
+              <small style="color: var(--texto-claro); font-size: 0.8rem;">
+                Deixe 0 para não exigir pedido mínimo
+              </small>
+            </div>
+          </div>
+          
+        </div>
+        
+        <!-- ============================================ -->
+        <!-- TAB: AÇAÍ -->
+        <!-- ============================================ -->
+        <div class="tab-conteudo" id="tab-acai">
+          
+          <div class="card-dica">
+            <i class="bi bi-info-circle-fill"></i>
+            <div>
+              <strong>Configurações específicas</strong> para a página "Monte seu Açaí".
+            </div>
+          </div>
+          
+          <!-- Máximo de ingredientes -->
+          <div class="config-section">
+            <div class="config-section-header">
+              <div class="config-section-icone">
+                <i class="bi bi-flower1"></i>
+              </div>
+              <div>
+                <h3 class="config-section-titulo">Máximo de ingredientes gratuitos</h3>
+                <p class="config-section-descricao">Quantos ingredientes "grátis" o cliente pode escolher</p>
+              </div>
+            </div>
+            
+            <div class="form-group" style="margin: 0;">
+              <label for="max_ingredientes">Quantidade máxima</label>
+              <input type="number" id="max_ingredientes" min="1" max="20" placeholder="5">
+              <small style="color: var(--texto-claro); font-size: 0.8rem;">
+                Recomendado: 5 ingredientes grátis (os pagos são ilimitados)
+              </small>
+            </div>
+          </div>
+          
+          <!-- Texto informativo -->
+          <div class="config-section">
+            <div class="config-section-header">
+              <div class="config-section-icone">
+                <i class="bi bi-chat-left-text"></i>
+              </div>
+              <div>
+                <h3 class="config-section-titulo">Texto informativo do açaí</h3>
+                <p class="config-section-descricao">Texto explicativo mostrado na página</p>
+              </div>
+            </div>
+            
+            <div class="form-group" style="margin: 0;">
+              <label for="texto_acai">Texto que aparece na página</label>
+              <textarea id="texto_acai" rows="3" placeholder="Escolha o tamanho e até 5 ingredientes grátis. Ingredientes especiais têm custo adicional."></textarea>
+            </div>
+          </div>
+          
+        </div>
+        
+        <!-- ============================================ -->
+        <!-- TAB: MENSAGENS -->
+        <!-- ============================================ -->
+        <div class="tab-conteudo" id="tab-mensagens">
+          
+          <div class="card-dica">
+            <i class="bi bi-info-circle-fill"></i>
+            <div>
+              <strong>Personalize as mensagens</strong> que os clientes veem ao fazer pedidos ou entrar em contato.
+            </div>
+          </div>
+          
+          <!-- Mensagem de contato -->
+          <div class="config-section">
+            <div class="config-section-header">
+              <div class="config-section-icone">
+                <i class="bi bi-chat-heart"></i>
+              </div>
+              <div>
+                <h3 class="config-section-titulo">Mensagem inicial do WhatsApp</h3>
+                <p class="config-section-descricao">Texto que aparece quando o cliente abre o WhatsApp pelo site</p>
+              </div>
+            </div>
+            
+            <div class="form-group" style="margin: 0;">
+              <label for="msg_whatsapp">Mensagem de saudação</label>
+              <textarea id="msg_whatsapp" rows="2" placeholder="Olá! Vim pelo site e gostaria de fazer um pedido."></textarea>
+              <small style="color: var(--texto-claro); font-size: 0.8rem;">
+                Mensagem enviada quando o cliente clica no botão do WhatsApp (exceto ao finalizar pedido)
+              </small>
+            </div>
+          </div>
+          
+          <!-- Frase de destaque -->
+          <div class="config-section">
+            <div class="config-section-header">
+              <div class="config-section-icone">
+                <i class="bi bi-megaphone"></i>
+              </div>
+              <div>
+                <h3 class="config-section-titulo">Frase da home (slogan)</h3>
+                <p class="config-section-descricao">Texto que aparece como chamada principal no site</p>
+              </div>
+            </div>
+            
+            <div class="form-group" style="margin: 0;">
+              <label for="slogan">Slogan da loja</label>
+              <input type="text" id="slogan" placeholder="Mais que doces, entregamos momentos felizes!">
+              <small style="color: var(--texto-claro); font-size: 0.8rem;">
+                Aparece no rodapé e em destaque na home
+              </small>
+            </div>
+          </div>
+          
+          <!-- Banner de aviso -->
+          <div class="config-section">
+            <div class="config-section-header">
+              <div class="config-section-icone">
+                <i class="bi bi-exclamation-circle"></i>
+              </div>
+              <div>
+                <h3 class="config-section-titulo">Aviso na home (opcional)</h3>
+                <p class="config-section-descricao">Banner que aparece no topo da home (deixe vazio para não exibir)</p>
+              </div>
+            </div>
+            
+            <div class="form-group" style="margin: 0;">
+              <label for="aviso_home">Texto do aviso</label>
+              <input type="text" id="aviso_home" placeholder="Ex: 🎉 Promoção: 20% OFF em todos os combos!">
+              <small style="color: var(--texto-claro); font-size: 0.8rem;">
+                Deixe vazio para não mostrar nenhum banner
+              </small>
+            </div>
+          </div>
+          
+        </div>
+        
+        <!-- ============================================ -->
+        <!-- BOTÃO SALVAR FLUTUANTE -->
+        <!-- ============================================ -->
+        <div class="botao-flutuante-salvar">
+          <div>
+            <strong style="font-size: 0.95rem;">Alterações não salvas</strong>
+            <div style="font-size: 0.8rem; color: var(--texto-claro);">
+              Clique em "Salvar" para aplicar as mudanças no site
+            </div>
+          </div>
+          <button class="btn-admin" id="btnSalvarConfig" onclick="salvarConfiguracoes()">
+            <i class="bi bi-check-lg"></i> SALVAR ALTERAÇÕES
+          </button>
+        </div>
+        
+      </div>
+      
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/admin/admin-config.js"></script>
+  <script src="../js/admin/admin-configuracoes.js"></script>
+</body>
+</html>
